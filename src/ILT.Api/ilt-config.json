@@ -1,0 +1,45 @@
+{
+  "Ilt": {
+    "IncomeCategories": [
+      "Salaris",
+      "Belastingteruggave",
+      "Dividend",
+      "Toeslag",
+      "Pensioen",
+      "Uitkering",
+      "Rente"
+    ],
+    "ExpenseCategories": [
+      "Huur",
+      "Hypotheek",
+      "Boodschappen",
+      "Energie",
+      "Water",
+      "Nutsen",
+      "Internet",
+      "Telefoon",
+      "Abonnement",
+      "Streaming",
+      "Verzekering",
+      "Zorgverzekering",
+      "Belastingen",
+      "Brandstof"
+    ],
+    "IgnoredCategories": [
+      "Sparen",
+      "Eigen overboeking"
+    ],
+    "MultiMonthHandling": "AssignToTransactionDate",
+    "MinAbsoluteAmount": 0,
+    "ExcludedCounterAccounts": []
+  },
+  "TransactionsApi": {
+    "BaseUrl": "https://solliciteren.edrgroup.nl/9F099326-0B50-4498-B668-E52E967DDCEB%20-%20ILT/",
+    "PathTemplate": "{accountNumber}.json?/q=/Transactions",
+    "AccountNumbers": [
+      "NL67BANK0123456789",
+      "NL21PART0987654321"
+    ],
+    "TimeoutSeconds": 30
+  }
+}

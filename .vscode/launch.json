@@ -1,0 +1,65 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch ILT.Api",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/ILT.Api/bin/Debug/net8.0/ILT.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/ILT.Api",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5080"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/src/ILT.Api/Views"
+      }
+    },
+    {
+      "name": "Launch ILT.Api (no build)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/ILT.Api/bin/Debug/net8.0/ILT.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/ILT.Api",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5080"
+      }
+    },
+    {
+      "name": "Attach to dotnet",
+      "type": "coreclr",
+      "request": "attach"
+    },
+    {
+      "name": "Debug Tests",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "dotnet",
+      "args": [
+        "test",
+        "${workspaceFolder}/tests/ILT.Tests/ILT.Tests.csproj",
+        "--no-build"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "env": {
+        "VSTEST_HOST_DEBUG": "1"
+      }
+    }
+  ]
+}

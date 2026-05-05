@@ -1,0 +1,8 @@
+{
+  "dotnet.defaultSolution": "ILT.sln",
+  "omnisharp.defaultLaunchSolution": "ILT.sln",
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true
+  }
+}
