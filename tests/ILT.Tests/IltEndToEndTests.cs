@@ -28,7 +28,7 @@ public class IltEndToEndTests
 
         var transactions = SamplePayload.Transactions;
 
-        var result = calculator.Calculate(transactions, new[] { "NL67BANK0123456789" });
+        var result = calculator.Calculate(transactions, ["NL67BANK0123456789"]);
 
         // Sanity: 35 transactions in the curl output.
         result.TransactionCount.Should().Be(35);

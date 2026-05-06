@@ -46,9 +46,7 @@ public sealed class HttpTransactionSource(
             .ReadFromJsonAsync<List<TransactionDto>>(JsonOptions, cancellationToken)
             ?? [];
 
-        return dtos
-            .Select(d => d.ToDomain(accountNumber))
-            .ToList();
+        return [.. dtos.Select(d => d.ToDomain(accountNumber))];
     }
 
     private sealed class TransactionDto

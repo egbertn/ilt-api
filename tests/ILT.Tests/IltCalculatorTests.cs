@@ -69,7 +69,7 @@ public class IltCalculatorTests
             Tx("2025-01-08", -400m, "Sparen"),
         };
 
-        var result = sut.Calculate(transactions, new[] { "NL67BANK0123456789" });
+        var result = sut.Calculate(transactions, ["NL67BANK0123456789"]);
 
         result.Months.Single().Expenses.Should().Be(0m);
         result.Months.Single().Income.Should().Be(3600m);
@@ -89,9 +89,9 @@ public class IltCalculatorTests
             Tx("2025-02-05", -50m, "Streaming"),
         };
 
-        var result = sut.Calculate(transactions, new[] { "NL67BANK0123456789" });
+        var result = sut.Calculate(transactions, ["NL67BANK0123456789"]);
 
-        result.UnknownCategories.Should().BeEquivalentTo(new[] { "Elektronica", "Streaming" });
+        result.UnknownCategories.Should().BeEquivalentTo(["Elektronica", "Streaming"]);
         result.IgnoredTransactionCount.Should().Be(2);
     }
 
@@ -109,7 +109,7 @@ public class IltCalculatorTests
             Tx("2025-01-01", 1200m, "Huur"), // sent as positive
         };
 
-        var result = sut.Calculate(transactions, new[] { "NL67BANK0123456789" });
+        var result = sut.Calculate(transactions, ["NL67BANK0123456789"]);
 
         var month = result.Months.Single();
         month.Income.Should().Be(3600m);
@@ -130,7 +130,7 @@ public class IltCalculatorTests
             Tx("2025-01-20", -150m, "Boodschappen"),
         };
 
-        var result = sut.Calculate(transactions, new[] { "NL67BANK0123456789" });
+        var result = sut.Calculate(transactions, ["NL67BANK0123456789"]);
 
         result.Months.Single().Expenses.Should().Be(150m);
         result.IgnoredTransactionCount.Should().Be(1);
@@ -149,7 +149,7 @@ public class IltCalculatorTests
             Tx("2025-01-08", -400m, "Boodschappen", counter: "NL77SAVE0000000012"),
         };
 
-        var result = sut.Calculate(transactions, new[] { "NL67BANK0123456789" });
+        var result = sut.Calculate(transactions, ["NL67BANK0123456789"]);
 
         result.Months.Single().Expenses.Should().Be(0m);
         result.IgnoredTransactionCount.Should().Be(1);
@@ -173,7 +173,7 @@ public class IltCalculatorTests
             PeriodEnd = DateTimeOffset.Parse("2025-06-01")
         };
 
-        var result = sut.Calculate(new[] { halfYearInsurance }, new[] { "NL67BANK0123456789" });
+        var result = sut.Calculate([halfYearInsurance], ["NL67BANK0123456789"]);
 
         result.Months.Should().HaveCount(6);
         result.Months.Should().AllSatisfy(m => m.Expenses.Should().Be(100m));
@@ -184,7 +184,7 @@ public class IltCalculatorTests
     {
         var sut = BuildSut(TestHelpers.DefaultConfig());
 
-        var result = sut.Calculate(Array.Empty<Transaction>(), new[] { "NL67BANK0123456789" });
+        var result = sut.Calculate([], ["NL67BANK0123456789"]);
 
         result.Months.Should().BeEmpty();
         result.AverageMonthlyIncome.Should().Be(0m);
