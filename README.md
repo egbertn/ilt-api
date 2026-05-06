@@ -117,11 +117,26 @@ dotnet test --nologo
 # Passed: 17, Failed: 0
 ```
 
+## Logging
+
+Structured logging via **Serilog**. Twee sinks geconfigureerd in `src/ILT.Api/appsettings.json`:
+
+- **Console** — voor lokaal draaien.
+- **Rolling file** in `logs/ilt-{yyyyMMdd}.log`, 7 dagen retentie.
+
+Per-request logging zit op `app.UseSerilogRequestLogging()` (één regel per request: method, path, status, duur). De Serilog-config is volledig data-driven (json) en kan per environment overschreven worden.
+
+```log
+2026-05-06 09:25:44.592 +02:00 [INF] ILT.Infrastructure.HttpTransactionSource: Fetching transactions for NL67BANK0123456789 ...
+2026-05-06 09:25:45.031 +02:00 [INF] ILT.Application.Services.IltService:        Fetched 72 transactions across 2 account(s).
+2026-05-06 09:25:45.075 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware: HTTP GET /api/ilt responded 200 in 500.56 ms
+```
+
 ## Pluspunten die zijn meegenomen
 
 - Dependency Injection via `Microsoft.Extensions.DependencyInjection`
 - Configuratie zonder herstart (`reloadOnChange: true` + `IOptionsMonitor<T>`)
-- Logging via `ILogger<T>`
+- Structured logging via Serilog (Console + rolling file) + per-request logging
 - Foutafhandeling op upstream-API (502 met heldere body)
 - Swagger UI op `/swagger`
 - `TreatWarningsAsErrors` in alle productie-projecten
