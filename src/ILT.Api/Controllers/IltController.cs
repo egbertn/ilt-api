@@ -15,7 +15,9 @@ public sealed class IltController(
 {
     [HttpGet]
     [ProducesResponseType(typeof(IltResult), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status502BadGateway)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IltResult>> Get(
         [FromQuery] string[]? accounts,
         CancellationToken cancellationToken)
@@ -37,10 +39,15 @@ public sealed class IltController(
 
             return Ok(result);
         }
-        catch (HttpRequestException ex)
+         catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
             logger.LogError(ex, "Upstream transactions API failed.");
-            return StatusCode(StatusCodes.Status502BadGateway, new
+            return StatusCode(StatusCodes.Status404NotFound);
+        }
+         catch (HttpRequestException ex)
+        {
+            logger.LogError(ex, "Upstream transactions API failed.");
+            return StatusCode((int)(ex.StatusCode ?? System.Net.HttpStatusCode.InternalServerError), new
             {
                 error = "Upstream transactions API failed.",
                 detail = ex.Message
